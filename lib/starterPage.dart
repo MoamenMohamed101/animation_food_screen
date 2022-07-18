@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/FadeAnimation.dart';
 
 class StarterPage extends StatefulWidget {
   const StarterPage({Key? key}) : super(key: key);
@@ -35,12 +36,15 @@ class _StarterPageState extends State<StarterPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Taking order from Deloivery',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold),
+                FadeAnimation(
+                  1,
+                  Text(
+                    'Taking order from Deloivery',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -51,7 +55,7 @@ class _StarterPageState extends State<StarterPage> {
                       TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 100,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -65,7 +69,19 @@ class _StarterPageState extends State<StarterPage> {
                     onPressed: () {},
                     child: const Text('Start'),
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Align(
+                  child: Text(
+                    'Now Deliver To your Door 24/7',
+                    style: TextStyle(color: Colors.white70, fontSize: 15),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
