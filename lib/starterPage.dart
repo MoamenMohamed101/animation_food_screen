@@ -24,25 +24,27 @@ class _StarterPageState extends State<StarterPage>
       duration: const Duration(milliseconds: 100),
     );
     animation =
-        Tween<double>(begin: 0.0, end: 25.0).animate(animationController!);
+        Tween<double>(begin: 1.0, end: 25.0).animate(animationController!);
     super.initState();
   }
 
   @override
   void dispose() {
     animationController!.dispose();
-
     super.dispose();
   }
 
   void onTap() {
-    setState(() {
-      textVisible = false;
-    });
+    setState(
+      () {
+        textVisible = false;
+      },
+    );
     animationController?.forward().then(
           (value) => Navigator.push(
             context,
-            PageTransition(child:const HomePage(), type:  PageTransitionType.fade)
+            PageTransition(
+                child: const HomePage(), type: PageTransitionType.fade),
           ),
         );
   }
@@ -75,8 +77,8 @@ class _StarterPageState extends State<StarterPage>
               children: [
                 FadeAnimation(
                   .5,
-                  Text(
-                    'Taking order from Deloivery',
+                  const Text(
+                    'Taking order from faster Deloivery',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -99,17 +101,24 @@ class _StarterPageState extends State<StarterPage>
                 ),
                 FadeAnimation(
                   1.2,
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: const LinearGradient(
-                        colors: [Colors.yellow, Colors.orange],
+                  ScaleTransition(
+                    scale: animation!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: const LinearGradient(
+                          colors: [Colors.yellow, Colors.orange],
+                        ),
                       ),
-                    ),
-                    child: MaterialButton(
-                      minWidth: double.infinity,
-                      onPressed: () => onTap(),
-                      child: const Text('Start'),
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 50),
+                        opacity: textVisible ? 1.0 : 0.0,
+                        child: MaterialButton(
+                          minWidth: double.infinity,
+                          onPressed: () => onTap(),
+                          child: const Text('Start'),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -118,10 +127,14 @@ class _StarterPageState extends State<StarterPage>
                 ),
                 FadeAnimation(
                   1.4,
-                  Align(
-                    child: Text(
-                      'Now Deliver To your Door 24/7',
-                      style: TextStyle(color: Colors.white70, fontSize: 15),
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 50),
+                    opacity: textVisible ? 1.0 : 0.0,
+                    child: const Align(
+                      child: Text(
+                        'Now Deliver To your Door 24/7',
+                        style: TextStyle(color: Colors.white70, fontSize: 15),
+                      ),
                     ),
                   ),
                 ),
