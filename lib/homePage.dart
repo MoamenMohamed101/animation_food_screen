@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -92,13 +92,37 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   'Free Delivery',
                   style: TextStyle(
-                    color: Colors.grey[700],
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),
+                      color: Colors.grey[700],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
-            )
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    FadeAnimation(
+                      1.4,
+                      makeItem('assets/images/one.jpg'),
+                    ),
+                    FadeAnimation(
+                      1.5,
+                      makeItem('assets/images/two.jpg'),
+                    ),
+                    FadeAnimation(
+                      1.6,
+                      makeItem('assets/images/three.jpg'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
@@ -121,6 +145,66 @@ class _HomePageState extends State<HomePage> {
                 color: isActive ? Colors.white : Colors.grey[500],
                 fontSize: 18,
                 fontWeight: isActive ? FontWeight.bold : FontWeight.w100),
+          ),
+        ),
+      ),
+    );
+  }
+
+  makeItem(String image) {
+    return AspectRatio(
+      aspectRatio: 1 / 1.4,
+      child: GestureDetector(
+        child: Container(
+          margin: const EdgeInsets.only(right: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                stops: const [.2, .9],
+                colors: [
+                  Colors.black.withOpacity(.9),
+                  Colors.black.withOpacity(.3),
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Align(
+                    alignment: Alignment.topRight,
+                    child: Icon(Icons.favorite, color: Colors.white),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        '\$ 15.00',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'vegetarian Pizza',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
         ),
       ),
