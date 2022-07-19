@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/FadeAnimation.dart';
+import 'package:food_app/homePage.dart';
+import 'package:page_transition/page_transition.dart';
 
 class StarterPage extends StatefulWidget {
   const StarterPage({Key? key}) : super(key: key);
@@ -9,7 +11,42 @@ class StarterPage extends StatefulWidget {
   State<StarterPage> createState() => _StarterPageState();
 }
 
-class _StarterPageState extends State<StarterPage> {
+class _StarterPageState extends State<StarterPage>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
+  Animation<double>? animation;
+  bool textVisible = true;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    animation =
+        Tween<double>(begin: 0.0, end: 25.0).animate(animationController!);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController!.dispose();
+
+    super.dispose();
+  }
+
+  void onTap() {
+    setState(() {
+      textVisible = false;
+    });
+    animationController?.forward().then(
+          (value) => Navigator.push(
+            context,
+            PageTransition(child:const HomePage(), type:  PageTransitionType.fade)
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +74,7 @@ class _StarterPageState extends State<StarterPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FadeAnimation(
-                  1,
+                  .5,
                   Text(
                     'Taking order from Deloivery',
                     style: TextStyle(
@@ -49,34 +86,43 @@ class _StarterPageState extends State<StarterPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text(
-                  'see resturants nearby by \nadding location',
-                  style:
-                      TextStyle(fontSize: 18, color: Colors.white, height: 1.5),
+                FadeAnimation(
+                  1,
+                  const Text(
+                    'see resturants nearby by \nadding location',
+                    style: TextStyle(
+                        fontSize: 18, color: Colors.white, height: 1.5),
+                  ),
                 ),
                 const SizedBox(
                   height: 100,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: const LinearGradient(
-                      colors: [Colors.yellow, Colors.orange],
+                FadeAnimation(
+                  1.2,
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                        colors: [Colors.yellow, Colors.orange],
+                      ),
                     ),
-                  ),
-                  child: MaterialButton(
-                    minWidth: double.infinity,
-                    onPressed: () {},
-                    child: const Text('Start'),
+                    child: MaterialButton(
+                      minWidth: double.infinity,
+                      onPressed: () => onTap(),
+                      child: const Text('Start'),
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 30,
                 ),
-                const Align(
-                  child: Text(
-                    'Now Deliver To your Door 24/7',
-                    style: TextStyle(color: Colors.white70, fontSize: 15),
+                FadeAnimation(
+                  1.4,
+                  Align(
+                    child: Text(
+                      'Now Deliver To your Door 24/7',
+                      style: TextStyle(color: Colors.white70, fontSize: 15),
+                    ),
                   ),
                 ),
                 const SizedBox(
